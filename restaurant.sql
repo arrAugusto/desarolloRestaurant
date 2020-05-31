@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2020 a las 05:54:40
+-- Tiempo de generación: 31-05-2020 a las 01:58:12
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -293,30 +293,6 @@ INSERT INTO `cantidadmesas` (`id`, `cantidadMesasRes`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
---
-
-CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL,
-  `categoria` text COLLATE utf8_spanish_ci NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `categorias`
---
-
-INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
-(1, 'Equipos Electromecánicos', '2017-12-21 20:53:29'),
-(2, 'Taladros', '2017-12-21 20:53:29'),
-(3, 'Andamios', '2017-12-21 20:53:29'),
-(4, 'Generadores de energía', '2017-12-21 20:53:29'),
-(5, 'Equipos para construcción', '2017-12-21 20:53:29'),
-(6, 'Martillos mecánicos', '2017-12-21 23:06:40');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `clientesrestaurant`
 --
 
@@ -356,7 +332,7 @@ CREATE TABLE `factuaciones` (
 --
 
 INSERT INTO `factuaciones` (`id`, `idMesa`, `monto`, `estado`, `fechaEmision`, `idCliente`) VALUES
-(1, 1, 400, 1, '2020-05-29 18:31:14', 1);
+(1, 3, 520, 1, '2020-05-30 17:54:31', 1);
 
 -- --------------------------------------------------------
 
@@ -377,12 +353,12 @@ CREATE TABLE `gestordemesas` (
 --
 
 INSERT INTO `gestordemesas` (`id`, `mesa`, `estado`, `mesero`, `idOrden`) VALUES
-(1, 1, 2, 1, 3),
-(2, 2, 0, 0, NULL),
-(3, 3, 0, 0, NULL),
+(1, 1, 0, 0, NULL),
+(2, 2, 1, 1, 2),
+(3, 3, 0, 1, 4),
 (4, 4, 0, 0, NULL),
-(5, 5, 0, 0, NULL),
-(6, 6, 0, 0, NULL),
+(5, 5, 1, 1, 6),
+(6, 6, 1, 1, 8),
 (7, 7, 0, 0, NULL),
 (8, 8, 0, 0, NULL),
 (9, 9, 0, 0, NULL),
@@ -445,9 +421,14 @@ CREATE TABLE `ordenesdemesas` (
 --
 
 INSERT INTO `ordenesdemesas` (`id`, `idMesa`, `idAperMenu`, `tipoOp`, `idUsuario`, `fechaOrden`, `cantidad`, `estadoOrden`, `idFactura`) VALUES
-(1, 1, 1, 0, 1, '2020-05-29 13:06:16', 4, 2, 1),
-(2, 1, 2, 0, 1, '2020-05-29 21:22:06', 5, 1, NULL),
-(3, 1, 8, 1, 1, '2020-05-29 21:22:06', 5, 1, NULL);
+(1, 2, 1, 0, 1, '2020-05-30 17:47:11', 2, 1, NULL),
+(2, 2, 5, 1, 1, '2020-05-30 17:47:11', 2, 1, NULL),
+(3, 3, 1, 0, 1, '2020-05-30 17:50:40', 4, 2, 1),
+(4, 3, 5, 1, 1, '2020-05-30 17:50:40', 1, 2, 1),
+(5, 5, 1, 0, 1, '2020-05-30 17:52:30', 3, 1, NULL),
+(6, 5, 3, 1, 1, '2020-05-30 17:52:30', 1, 1, NULL),
+(7, 6, 1, 0, 1, '2020-05-30 17:53:15', 1, 1, NULL),
+(8, 6, 4, 1, 1, '2020-05-30 17:53:15', 2, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -558,28 +539,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
 (1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/191.jpg', 1, '2018-02-06 17:25:57', '2018-02-06 22:25:57'),
-(57, 'Juan Fernando Urrego', 'juan', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Administrador', 'vistas/img/usuarios/juan/976.jpg', 1, '2018-02-06 16:58:50', '2020-05-24 17:21:26'),
-(58, 'Julio Gómez', 'julio', '$2a$07$asxx54ahjppf45sd87a5auQhldmFjGsrgUipGlmQgDAcqevQZSAAC', 'Especial', 'vistas/img/usuarios/julio/100.png', 1, '2018-02-06 17:09:22', '2018-02-06 22:09:22'),
-(59, 'Ana Gonzales', 'ana', '$2a$07$asxx54ahjppf45sd87a5auJRR6foEJ7ynpjisKtbiKJbvJsoQ8VPS', '', '', 1, '2017-12-26 19:21:40', '2020-05-30 03:18:45');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ventas`
---
-
-CREATE TABLE `ventas` (
-  `id` int(11) NOT NULL,
-  `codigo` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `id_vendedor` int(11) NOT NULL,
-  `productos` text COLLATE utf8_spanish_ci NOT NULL,
-  `impuesto` float NOT NULL,
-  `neto` float NOT NULL,
-  `total` float NOT NULL,
-  `metodo_pago` text COLLATE utf8_spanish_ci NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+(57, 'Juan Fernando Urrego', 'juan', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Cocinero', 'vistas/img/usuarios/juan/425.jpg', 1, '2018-02-06 16:58:50', '2020-05-30 21:36:40'),
+(58, 'Julio Gómez', 'julio', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Mesero', '', 1, '2018-02-06 17:09:22', '2020-05-30 21:36:23'),
+(59, 'Ana Gonzales', 'ana', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Mesero', 'vistas/img/usuarios/ana/785.jpg', 1, '2017-12-26 19:21:40', '2020-05-30 21:35:13');
 
 --
 -- Índices para tablas volcadas
@@ -595,12 +557,6 @@ ALTER TABLE `aperitivosrestaurant`
 -- Indices de la tabla `cantidadmesas`
 --
 ALTER TABLE `cantidadmesas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `categorias`
---
-ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -652,12 +608,6 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `ventas`
---
-ALTER TABLE `ventas`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -672,12 +622,6 @@ ALTER TABLE `aperitivosrestaurant`
 --
 ALTER TABLE `cantidadmesas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `clientesrestaurant`
@@ -713,7 +657,7 @@ ALTER TABLE `movimientosdecajadiario`
 -- AUTO_INCREMENT de la tabla `ordenesdemesas`
 --
 ALTER TABLE `ordenesdemesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -726,12 +670,6 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
-
---
--- AUTO_INCREMENT de la tabla `ventas`
---
-ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
